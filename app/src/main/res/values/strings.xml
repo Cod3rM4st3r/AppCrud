@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppCrud</string>
+    <string name="title_activity_working_table">workingTable</string>
+    <string name="tab_text_1">Cadastrar</string>
+    <string name="tab_text_2">Listar</string>
+    <string name="title_activity_work_table">workTable</string>
+    <string name="appbar_scrolling_view_behavior">T</string>
+</resources>
