@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import br.com.mrdroid.br.com.mrdroid.model.Config;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -12,7 +13,7 @@ import okhttp3.Response;
 
 public class WebServiceC {
 
-    private String url = "https://viacep.com.br/ws/01001000/json/";
+    private String url;
 
     public void sendRequest() {
         OkHttpClient client = new OkHttpClient();
@@ -28,7 +29,7 @@ public class WebServiceC {
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
                     String res = response.body().string();
-                    
+
                 }
             }
         });
@@ -37,6 +38,12 @@ public class WebServiceC {
 
     public void convertTojson(){
 
+    }
+
+    WebServiceC(Config confi){
+        url  = confi.getIp() + ":";
+        url+=  String.valueOf(confi.getPorta());
+        
     }
 
 }
