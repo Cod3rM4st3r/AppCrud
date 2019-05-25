@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ListView
+            android:id="@+id/lista"
             android:layout_width="374dp"
             android:layout_height="519dp"
             android:layout_alignParentStart="true"

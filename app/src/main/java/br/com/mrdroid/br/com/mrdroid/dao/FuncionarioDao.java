@@ -18,7 +18,7 @@ public class FuncionarioDao {
     }
 
     public List<Funcionario> listar(){
-        List<Funcionario> list = null;
+        List<Funcionario> list = null ;
 
 
 

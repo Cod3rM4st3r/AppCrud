@@ -43,7 +43,7 @@ public class WebServiceC {
     WebServiceC(Config confi){
         url  = confi.getIp() + ":";
         url+=  String.valueOf(confi.getPorta());
-        
+
     }
 
 }
