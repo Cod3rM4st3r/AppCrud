@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
-public class Config extends AppCompatActivity {
+import br.com.mrdroid.MainActivity;
+
+public class Config {
 
     private int porta;
     private String ip;
+
 
     public int getPorta() {
         return porta;
@@ -41,7 +44,8 @@ public class Config extends AppCompatActivity {
 
 
     public void getShaed(){
-        SharedPreferences sh = getSharedPreferences("config", Context.MODE_PRIVATE);
+        Context a = MainActivity.getAppCont();
+        SharedPreferences sh = a.getSharedPreferences("config",a.MODE_PRIVATE);
         Config conf = new Config();
         this.setIp(sh.getString("ip",""));
         this.setPorta(sh.getInt("porta",0));

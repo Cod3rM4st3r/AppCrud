@@ -7,9 +7,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -19,15 +22,22 @@ public class Detalhe extends AppCompatActivity {
     private ImageView imgVi;
     private Button btnCamera;
     private Button btnEditar;
+    private TextView txNome;
+
+    private EditText nNome;
+    private EditText nSal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe);
 
+        txNome = findViewById(R.id.txnome);
         btnCamera = findViewById(R.id.btnCamera);
         btnEditar = findViewById(R.id.btnEditar);
         imgVi = findViewById(R.id.imgFunc);
+        nNome = findViewById(R.id.nNome);
+        nSal = findViewById(R.id.nSal);
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +45,14 @@ public class Detalhe extends AppCompatActivity {
                 abrirCamera();
             }
         });
+        Bundle b = getIntent().getExtras();
+
+        String name = b.getString("nome"," ");
+        double sal = b.getDouble("salario",0);
+        txNome.setText(name);
+        nNome.setText(name);
+        nSal.setText(String.valueOf(sal));
+
     }
 
 

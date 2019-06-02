@@ -19,6 +19,8 @@ public class configuracao extends AppCompatActivity {
     private EditText porta;
     private Button save;
     private AlertDialog dialog;
+    private static  Context cont;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,8 @@ public class configuracao extends AppCompatActivity {
         porta = findViewById(R.id.porta);
         save = findViewById(R.id.imageButton2);
 
-
         carregarPreferencias();
+
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +59,7 @@ public class configuracao extends AppCompatActivity {
                     builder.setTitle("Atenção");
                     builder.setMessage("Ocorreu um erro\nErro : " + e.getMessage());
 
+
                 }
 
             }
@@ -76,4 +79,9 @@ public class configuracao extends AppCompatActivity {
         ip.setText(conf.getIp());
         porta.setText(String.valueOf(conf.getPorta()));
     }
+
+    public  static Context getAppCont(){
+        return cont;
+    }
+
 }

@@ -6,6 +6,16 @@ public class Funcionario {
     private String nome;
     private Date dataEmi;
     private double salario;
+    private Byte[] foto;
+
+
+    public Byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Byte[] foto) {
+        this.foto = foto;
+    }
 
     public String getNome() {
         return nome;
@@ -15,8 +25,10 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public Date getDataEmi() {
-        return dataEmi;
+    public String getDataEmi() {
+
+        return String.valueOf(this.dataEmi.getYear()+"/"+this.dataEmi.getMonth() + "/"+this.dataEmi.getDay());
+
     }
 
     public void setDataEmi(Date dataEmi) {
@@ -29,5 +41,17 @@ public class Funcionario {
 
     public void setSalario(double salario) {
         this.salario = salario;
+    }
+
+    public void setSalario(String salario) throws Exception {
+        try{
+            this.salario = Double.parseDouble(salario);
+        }catch(Exception e ){
+            throw new Exception("Numero incorreto !");
+        }
+    }
+
+    public String toString(){
+        return "Nome :"+this.getNome() + "\nSalario :"+this.getSalario()+"\nData : "+this.getDataEmi();
     }
 }

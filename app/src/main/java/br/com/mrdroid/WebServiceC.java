@@ -15,7 +15,9 @@ public class WebServiceC {
 
     private String url;
 
-    public void sendRequest() {
+    private String res = "";
+
+    public String sendRequest() {
         OkHttpClient client = new OkHttpClient();
         final Request req = new Request.Builder().url(url).build();
 
@@ -28,11 +30,13 @@ public class WebServiceC {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
-                    String res = response.body().string();
+                    res = response.body().string();
 
                 }
             }
         });
+
+        return res;
     }
 
 
@@ -40,9 +44,9 @@ public class WebServiceC {
 
     }
 
-    WebServiceC(Config confi){
+    public WebServiceC(Config confi,String operation,String jsons){
         url  = confi.getIp() + ":";
-        url+=  String.valueOf(confi.getPorta());
+        url+=  String.valueOf(confi.getPorta()) + "/"+operation;
 
     }
 

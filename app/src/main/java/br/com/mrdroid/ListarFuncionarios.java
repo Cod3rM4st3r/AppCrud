@@ -13,11 +13,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import br.com.mrdroid.br.com.mrdroid.dao.FuncionarioDao;
+import br.com.mrdroid.br.com.mrdroid.model.Funcionario;
+
 public class ListarFuncionarios extends Fragment {
 
     String[] dados = new String[] { "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread",
             "Honeycomb", "Ice Cream Sandwich", "Jelly Bean",
             "KitKat", "Lollipop", "Marshmallow", "Nougat" };
+
+    private List<Funcionario> lista;
 
     private ListView listView;
 
@@ -33,7 +40,8 @@ public class ListarFuncionarios extends Fragment {
 
         this.listView = view.findViewById(R.id.lista);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, dados);
+        carregarLista();
+        final ArrayAdapter<Funcionario> adapter = new ArrayAdapter<Funcionario>(getContext(), android.R.layout.simple_list_item_1, lista);
 
         listView.setAdapter(adapter);
 
@@ -43,10 +51,31 @@ public class ListarFuncionarios extends Fragment {
                 /*Toast.makeText(getContext(),
                         "Clicou no item " + position, Toast.LENGTH_LONG).show();*/
                 Intent intent = new Intent(getContext(),Detalhe.class);
+                intent.putExtra("nome",lista.get(position).getNome());
+                intent.putExtra("salario",lista.get(position).getSalario());
+                intent.putExtra("foto",lista.get(position).getFoto());
+
+
                 startActivity(intent);
+
 
 
             }
         });
+    }
+
+
+    public void carregarLista(){
+        FuncionarioDao fdao = new FuncionarioDao();
+
+        this.lista = fdao.listar();
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        this.lista = null;
     }
 }

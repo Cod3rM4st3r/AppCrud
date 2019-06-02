@@ -1,6 +1,7 @@
 package br.com.mrdroid;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -18,12 +19,15 @@ public class MainActivity extends AppCompatActivity {
     private static final  int CAMERA=1;
     private static final int READEX=2;
     private static final int WRITEEX=3;
-
+    private static  Context cont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cont = getApplicationContext();
+        getPermissoes();
 
         btn = findViewById(R.id.btnConfig);
         btnEntrar = findViewById(R.id.btnEntrar);
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void getPermissoes(){
 
@@ -97,5 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public  static Context getAppCont(){
+        return cont;
     }
 }
