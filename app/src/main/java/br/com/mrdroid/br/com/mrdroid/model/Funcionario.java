@@ -7,7 +7,18 @@ public class Funcionario {
     private Date dataEmi;
     private double salario;
     private Byte[] foto;
+    private int id=0;
 
+    public int getId() {
+        if(id ==0 ){
+            return 0;
+        }
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Byte[] getFoto() {
         return foto;
@@ -27,7 +38,7 @@ public class Funcionario {
 
     public String getDataEmi() {
 
-        return String.valueOf(this.dataEmi.getYear()+"/"+this.dataEmi.getMonth() + "/"+this.dataEmi.getDay());
+        return "2018-01-01";
 
     }
 
@@ -52,6 +63,6 @@ public class Funcionario {
     }
 
     public String toString(){
-        return "Nome :"+this.getNome() + "\nSalario :"+this.getSalario()+"\nData : "+this.getDataEmi();
+        return "\nCodigo:  "+this.getId()+"\nNome :"+this.getNome() + "\nSalario :"+this.getSalario()+"\nData : "+this.getDataEmi()+"\n";
     }
 }

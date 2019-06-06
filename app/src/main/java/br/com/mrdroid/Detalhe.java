@@ -13,8 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
+
+import br.com.mrdroid.br.com.mrdroid.dao.FuncionarioDao;
+import br.com.mrdroid.br.com.mrdroid.model.Funcionario;
 
 public class Detalhe extends AppCompatActivity {
 
@@ -22,11 +26,13 @@ public class Detalhe extends AppCompatActivity {
     private ImageView imgVi;
     private Button btnCamera;
     private Button btnEditar;
+    private Button btnDelete;
     private TextView txNome;
 
     private EditText nNome;
     private EditText nSal;
 
+    private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +44,7 @@ public class Detalhe extends AppCompatActivity {
         imgVi = findViewById(R.id.imgFunc);
         nNome = findViewById(R.id.nNome);
         nSal = findViewById(R.id.nSal);
-
+        btnDelete =findViewById(R.id.delete);
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,9 +55,32 @@ public class Detalhe extends AppCompatActivity {
 
         String name = b.getString("nome"," ");
         double sal = b.getDouble("salario",0);
+        id = b.getInt("id");
         txNome.setText(name);
         nNome.setText(name);
         nSal.setText(String.valueOf(sal));
+
+        btnEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Funcionario f = new Funcionario();
+                f.setId(id);
+                f.setNome(nNome.getText().toString());
+                f.setSalario(Double.parseDouble(nSal.getText().toString()));
+                FuncionarioDao fdao = new FuncionarioDao();
+                Toast.makeText(getApplicationContext(),fdao.gravar(f),Toast.LENGTH_LONG);
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FuncionarioDao funcionarioDao = new FuncionarioDao();
+                funcionarioDao.excluir(id);
+                finish();
+            }
+        });
+
 
     }
 

@@ -20,7 +20,7 @@ public class Cadastrar extends   Fragment {
     private EditText nome;
     private EditText salario;
     private Button btnSalva;
-    private Button foto;
+    //private Button foto;
 
 
 
@@ -38,7 +38,7 @@ public class Cadastrar extends   Fragment {
         nome = view.findViewById(R.id.nome);
         salario = view.findViewById(R.id.salario);
         btnSalva = view.findViewById(R.id.btnSalvar);
-        foto = view.findViewById(R.id.btnCamera);
+        //foto = view.findViewById(R.id.btnCamera);
 
         btnSalva.setOnClickListener(new View.OnClickListener() {
             @Override

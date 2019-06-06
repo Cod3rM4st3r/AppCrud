@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,13 +21,11 @@ import br.com.mrdroid.br.com.mrdroid.model.Funcionario;
 
 public class ListarFuncionarios extends Fragment {
 
-    String[] dados = new String[] { "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread",
-            "Honeycomb", "Ice Cream Sandwich", "Jelly Bean",
-            "KitKat", "Lollipop", "Marshmallow", "Nougat" };
-
     private List<Funcionario> lista;
 
     private ListView listView;
+
+    private Button atualizar;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         View rootView = inflater.inflate(R.layout.listarfuncionarios,container,false);
@@ -39,8 +38,23 @@ public class ListarFuncionarios extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.listView = view.findViewById(R.id.lista);
+        atualizar = view.findViewById(R.id.refes);
 
-        carregarLista();
+        atualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                carregarLista();
+
+                final ArrayAdapter<Funcionario> adapter = new ArrayAdapter<Funcionario>(getContext(), android.R.layout.simple_list_item_1, lista);
+
+                listView.setAdapter(adapter);
+            }
+        });
+
+        FuncionarioDao fdao = new FuncionarioDao();
+
+        this.lista = fdao.listar();
+
         final ArrayAdapter<Funcionario> adapter = new ArrayAdapter<Funcionario>(getContext(), android.R.layout.simple_list_item_1, lista);
 
         listView.setAdapter(adapter);
@@ -51,6 +65,7 @@ public class ListarFuncionarios extends Fragment {
                 /*Toast.makeText(getContext(),
                         "Clicou no item " + position, Toast.LENGTH_LONG).show();*/
                 Intent intent = new Intent(getContext(),Detalhe.class);
+                intent.putExtra("id",lista.get(position).getId());
                 intent.putExtra("nome",lista.get(position).getNome());
                 intent.putExtra("salario",lista.get(position).getSalario());
                 intent.putExtra("foto",lista.get(position).getFoto());
@@ -63,6 +78,7 @@ public class ListarFuncionarios extends Fragment {
             }
         });
     }
+
 
 
     public void carregarLista(){

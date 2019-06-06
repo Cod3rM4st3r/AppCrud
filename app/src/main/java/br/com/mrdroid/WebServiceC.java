@@ -7,8 +7,10 @@ import java.io.IOException;
 import br.com.mrdroid.br.com.mrdroid.model.Config;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class WebServiceC {
@@ -16,37 +18,93 @@ public class WebServiceC {
     private String url;
 
     private String res = "";
-
+    private String json;
     public String sendRequest() {
-        OkHttpClient client = new OkHttpClient();
-        final Request req = new Request.Builder().url(url).build();
+        try {
+            OkHttpClient client = new OkHttpClient();
+            final Request req;
+            if (json ==null) {
+                req  = new Request.Builder().get().url(url).build();
+                client.newCall(req).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-        client.newCall(req).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            res = response.body().string();
+
+                        }
+                    }
+                });
+            }else{
+                RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+                req = new Request.Builder().post(body).url(url).build();
+
+                client.newCall(req).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            res = response.body().string();
+
+                        }
+                    }
+                });
             }
+            Thread.sleep(2000);
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
-                    res = response.body().string();
+            return res;
+        }catch (Exception e){
 
-                }
-            }
-        });
-
+        }
         return res;
     }
 
+    public String delete() {
+        try {
+            OkHttpClient client = new OkHttpClient();
+            final Request req;
 
-    public void convertTojson(){
+            req  = new Request.Builder().delete().url(url).build();
+            client.newCall(req).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
 
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        res = response.body().string();
+
+                    }
+                }
+            });
+
+            Thread.sleep(2000);
+            return res;
+        }catch(Exception e){
+            throw  new RuntimeException();
+        }
     }
 
     public WebServiceC(Config confi,String operation,String jsons){
         url  = confi.getIp() + ":";
-        url+=  String.valueOf(confi.getPorta()) + "/"+operation;
+        url+=  String.valueOf(confi.getPorta()) + ""+operation;
+        this.json = jsons;
+
+    }
+
+    public WebServiceC(Config confi,String operation){
+        url  = confi.getIp() + ":";
+        url+=  String.valueOf(confi.getPorta()) + ""+operation;
 
     }
 
